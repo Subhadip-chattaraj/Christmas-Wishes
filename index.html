@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas!</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Great Vibes', cursive, Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #2c3e50;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        header {
+            background: linear-gradient(to right, #c0392b, #e74c3c);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+        }
+        .tree {
+            margin: 30px auto;
+            width: 200px;
+            animation: twinkle 2s infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .message {
+            margin: 20px;
+            font-size: 1.8em;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        button:hover {
+            background-color: #2ecc71;
+        }
+        footer {
+            background: linear-gradient(to right, #c0392b, #e74c3c);
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .snow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            box-shadow: 0 0 5px white;
+            animation: fall 5s linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10px); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Merry Christmas!</h1>
+    </header>
+
+    <div class="snow" id="snow"></div>
+
+    <img src="santa.png" alt="Christmas Tree" class="tree">
+
+    <div class="message" id="message">Wishing you joy, love, and happiness this holiday season!</div>
+
+    <button onclick="changeMessage()">Click for More Wishes</button>
+
+    <footer>
+        <p>&copy; 2024 Happy Holidays!</p>
+        <div id="countdown"></div>
+    </footer>
+
+    <script>
+        const messages = [
+            "May your Christmas be filled with laughter and love!",
+            "Wishing you a holiday full of warmth and cheer!",
+            "Have a magical and blessed Christmas!",
+            "Peace, joy, and love to you this Christmas!",
+            "Celebrate the season with your loved ones!"
+        ];
+
+        function changeMessage() {
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            document.getElementById('message').textContent = messages[randomIndex];
+        }
+
+        function createSnowflakes() {
+            const snowContainer = document.getElementById('snow');
+            for (let i = 0; i < 100; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+                snowflake.style.opacity = Math.random();
+                snowContainer.appendChild(snowflake);
+            }
+        }
+
+        function startCountdown() {
+            const countdownEl = document.getElementById('countdown');
+            const christmas = new Date(new Date().getFullYear(), 11, 25);
+            const now = new Date();
+
+            if (now > christmas) christmas.setFullYear(christmas.getFullYear() + 1);
+
+            setInterval(() => {
+                const timeLeft = christmas - new Date();
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                countdownEl.innerHTML = `<p>Countdown to Christmas: ${days}d ${hours}h ${minutes}m ${seconds}s</p>`;
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createSnowflakes();
+            startCountdown();
+        });
+    </script>
+</body>
+</html>
